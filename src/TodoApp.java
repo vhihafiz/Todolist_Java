@@ -19,9 +19,34 @@ public class TodoApp {
         viewTodo();
     }
 
-    public static void main(String[] args) {
-        testDeleteTodo();
+    public static void testUpdateTodo() {
+        testAddTodo();
+        updateTodo(11, "Update");
+        updateTodo(3, "Update");
+        viewTodo();
     }
+
+    // Test Menu
+    public static void testMenuAdd() {
+        menuAdd();
+        viewTodo();
+    }
+
+    public static void testMenuUpdate() {
+        testAddTodo();
+        menuUpdate();
+        viewTodo();
+    }
+
+
+    public static void main(String[] args) {
+
+
+
+    }
+
+
+    // CRUD todoApp
 
     public static void addTodo(String todo) {
         boolean isFull = true;
@@ -61,14 +86,12 @@ public class TodoApp {
     }
 
     public static void deleteTodo(int id) {
-        if (id > 0) {
-            id -= 1;
-
-            for (int i = id; i < todoList.length; i++) {
+        if (id > 0 && id < todoList.length && todoList[id - 1] != null) {
+            for (int i = (id - 1); i < todoList.length; i++) {
                 if (i == todoList.length - 1) {
                     todoList[i] = null;
                 } else {
-                    todoList[i] = todoList[i+1];
+                    todoList[i] = todoList[i + 1];
                 }
             }
         } else if (todoList[0] == null) {
@@ -76,17 +99,64 @@ public class TodoApp {
         } else if (id <= 0) {
             System.out.println("Todo is start from 1");
         } else if (id > todoList.length) {
-            System.out.println("Cannot delete, todo length maximum number is " + todoList.length);
+            System.out.println("Cannot delete id: " + id + ", todo length maximum number is " + todoList.length);
         } else if (todoList[id - 1] == null) {
             for (int i = 0; i < todoList.length; i++) {
                 if (todoList[i] == null) {
-                    System.out.printf("Cannot delete id: %d, because Todo number only %d", id, i);
+                    System.out.println("Cannot delete id: " + id + ", because Todo number only " + i);
                     break;
                 }
             }
         }
     }
 
+    public static void updateTodo(int id, String newTodo) {
+        if (id > 0 && id < todoList.length && todoList[id - 1] != null) {
+            todoList[id - 1] = newTodo;
+        } else if (todoList[0] == null) {
+            System.out.println("Todolist now is empty, there is nothing to update");
+        } else if (id <= 0) {
+            System.out.println("Todo is start from 1");
+        } else if (id > todoList.length) {
+            System.out.println("Cannot update id: " + id + ", todo length maximum number is " + todoList.length);
+        } else if (todoList[id - 1] == null) {
+            for (int i = 0; i < todoList.length; i++) {
+                if (todoList[i] == null) {
+                    System.out.println("Cannot delete id: " + id + ", because Todo number only " + i);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Menu
+    public static void menuAdd() {
+        System.out.println("Menu Add Todo");
+        String input = scannerUtil("Todo (Type X or x for CANCEL)");
+
+        if (input.equals("x") || input.equals("X")) {
+            return;
+        } else {
+            addTodo(input);
+        }
+    }
+
+    public static void menuUpdate() {
+        System.out.println("Menu Update Todo");
+
+        String input = scannerUtil("Update id (Type X or x for CANCEL)");
+        String updatedTodo = scannerUtil("Todo update (Type X or x for CANCEL)");
+
+        if (input.equals("x") || input.equals("X")) {
+            return;
+        } else {
+            int id = Integer.parseInt(input);
+            updateTodo(id, updatedTodo);
+        }
+    }
+
+
+    // Util
     public static String scannerUtil(String info) {
         System.out.printf("%s: ", info);
         String input = scanner.nextLine();
