@@ -45,10 +45,36 @@ public class TodoApp {
     }
 
 
-
     public static void main(String[] args) {
 
-        testMenuDeleteTodo();
+        menuTodoApp();
+    }
+
+    // Main Menu
+    public static void menuTodoApp() {
+        boolean isStart = true;
+
+        while (isStart) {
+            System.out.println("Welcome to TodoApp");
+            System.out.println("1. Add Todo");
+            System.out.println("2. Get All Todo");
+            System.out.println("3. Update Todo");
+            System.out.println("4. Delete Todo");
+            System.out.println("X. Exit App");
+
+            String input = scannerUtil("Choice");
+
+            switch (input) {
+                case "1" -> menuAdd();
+                case "2" -> viewTodo();
+                case "3" -> menuUpdate();
+                case "4" -> menuDelete();
+                case "x" -> isStart = false;
+                case "X" -> isStart = false;
+
+            }
+
+        }
 
     }
 
@@ -85,6 +111,7 @@ public class TodoApp {
     }
 
     public static void viewTodo() {
+        System.out.println("Todo List: ");
         for (int i = 0; i < todoList.length; i++) {
             if (todoList[i] != null) {
                 System.out.println((i + 1) + ". " + todoList[i]);
@@ -176,7 +203,6 @@ public class TodoApp {
             deleteTodo(id);
         }
     }
-
 
 
     // Util
