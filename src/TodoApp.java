@@ -38,10 +38,17 @@ public class TodoApp {
         viewTodo();
     }
 
+    public static void testMenuDeleteTodo() {
+        testAddTodo();
+        menuDelete();
+        viewTodo();
+    }
+
+
 
     public static void main(String[] args) {
 
-
+        testMenuDeleteTodo();
 
     }
 
@@ -142,10 +149,11 @@ public class TodoApp {
     }
 
     public static void menuUpdate() {
+        viewTodo();
         System.out.println("Menu Update Todo");
 
         String input = scannerUtil("Update id (Type X or x for CANCEL)");
-        String updatedTodo = scannerUtil("Todo update (Type X or x for CANCEL)");
+        String updatedTodo = scannerUtil("Update Todo (Type X or x for CANCEL)");
 
         if (input.equals("x") || input.equals("X")) {
             return;
@@ -154,6 +162,21 @@ public class TodoApp {
             updateTodo(id, updatedTodo);
         }
     }
+
+    public static void menuDelete() {
+        viewTodo();
+        System.out.println("Menu Delete Todo");
+
+        String input = scannerUtil("Delete id (Type X or x for CANCEL)");
+
+        if (input.equals("x") || input.equals("X")) {
+            return;
+        } else {
+            int id = Integer.parseInt(input);
+            deleteTodo(id);
+        }
+    }
+
 
 
     // Util
