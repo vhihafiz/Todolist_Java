@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class TodoApp {
 
+    // Initial (scanner, todoList)
     public static Scanner scanner = new Scanner(System.in);
     public static String[] todoList = new String[10];
 
@@ -46,7 +47,6 @@ public class TodoApp {
 
 
     public static void main(String[] args) {
-
         menuTodoApp();
     }
 
@@ -80,8 +80,7 @@ public class TodoApp {
 
 
     // CRUD todoApp
-
-    public static void addTodo(String todo) {
+    public static boolean resizeIfFull() {
         boolean isFull = true;
 
         for (int i = 0; i < todoList.length; i++) {
@@ -91,7 +90,11 @@ public class TodoApp {
             }
         }
 
-        if (isFull) {
+        return isFull;
+    }
+
+    public static void resizeTodoList() {
+        if (resizeIfFull()) {
             String[] tempTodoList = todoList;
             todoList = new String[todoList.length * 2];
 
@@ -99,6 +102,10 @@ public class TodoApp {
                 todoList[i] = tempTodoList[i];
             }
         }
+    }
+
+    public static void addTodo(String todo) {
+        resizeTodoList();
 
         for (int i = 0; i < todoList.length; i++) {
             if (todoList[i] == null) {
@@ -106,7 +113,6 @@ public class TodoApp {
                 break;
             }
         }
-
 
     }
 
@@ -128,6 +134,7 @@ public class TodoApp {
                     todoList[i] = todoList[i + 1];
                 }
             }
+            System.out.println("Success delete todo id: " + id + "\n");
         } else if (todoList[0] == null) {
             System.out.println("Todolist now is empty, there is nothing to delete");
         } else if (id <= 0) {
@@ -146,7 +153,10 @@ public class TodoApp {
 
     public static void updateTodo(int id, String newTodo) {
         if (id > 0 && id < todoList.length && todoList[id - 1] != null) {
+            System.out.print("Success update todo id: " + id + " -> from " + todoList[id - 1]);
             todoList[id - 1] = newTodo;
+            System.out.print(" to " + todoList[id - 1] + "\n");
+
         } else if (todoList[0] == null) {
             System.out.println("Todolist now is empty, there is nothing to update");
         } else if (id <= 0) {
