@@ -7,7 +7,8 @@ import service.TodoServiceImpl;
 
 public class TestTodoRepository {
     public static void main(String[] args) {
-        testAddTodo();
+//        testAddTodo();
+//        testGetAllTodo();
     }
 
     public static void testAddTodo() {
@@ -22,5 +23,16 @@ public class TestTodoRepository {
 
 
 
+    }
+
+    public static void testGetAllTodo() {
+        TodoRepository todoRepository = new TodoRepositoryImpl();
+        TodoService todoService = new TodoServiceImpl(todoRepository);
+
+        todoService.addTodo("CobaTodo");
+        todoService.addTodo("CobaTodo");
+        todoService.addTodo("CobaTodo");
+
+        todoService.getAll();
     }
 }

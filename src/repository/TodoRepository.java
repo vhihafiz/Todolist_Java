@@ -8,4 +8,10 @@ public interface TodoRepository {
 
     Todo[] getAll();
 
+    void updateTodo (Integer id, String todo);
+
+    void deleteTodo(Integer id);
+
+
+
 }
